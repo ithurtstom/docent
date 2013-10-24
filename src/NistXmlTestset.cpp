@@ -55,9 +55,12 @@ NistXmlTestset::NistXmlTestset(const std::string &file)
 	doc.getDocumentElement().normalize();
 
 	Arabica::XPath::XPath<std::string> xp;
-
 	Arabica::XPath::NodeSet<std::string> docnodes =
-		xp.compile("/mteval/srcset/doc").evaluateAsNodeSet(doc.getDocumentElement());
+			xp.compile("/mteval/srcset/doc").evaluateAsNodeSet(doc.getDocumentElement());
+
+	if(docnodes.empty())
+		LOG(logger_, error, "XPath expression " << "<mteval><srcset><doc>" << " returns empty node set.");
+
 	docnodes.to_document_order();
 	BOOST_FOREACH(Arabica::DOM::Node<std::string> n, docnodes)
 		documents_.push_back(boost::make_shared<NistXmlDocument>(n));
