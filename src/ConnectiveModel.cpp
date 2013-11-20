@@ -309,8 +309,6 @@ struct ConnectiveModelState : public FeatureFunction::State, public FeatureFunct
 			targetRegex = "(^|\\s)(daher|deshalb|somit|also|deswegen|darum|folglich|dafür|hierfür|demzufolge|mithin|ergo|aus diesem Grund|damit|demnach|infolgedessen)(\\s|\\,|\\.|\\?|\\!|\\:|\\;|\\'|\\’).*";
 		else if (s == "Otherwise" || s == "otherwise")
 			targetRegex = "(^|\\s)(ansonsten|andernfalls|anderweitig|anderenfalls|anderweit|andererseits|widrigenfalls|andrerseits|anders|sonst)(\\s|\\,|\\.|\\?|\\!|\\:|\\;|\\'|\\’).*";
-		//else
-			//targetRegex = "bla";
 		return targetRegex;
 	}
 
@@ -325,7 +323,6 @@ FeatureFunction::State *ConnectiveModel::initDocument(const DocumentState &doc, 
 	ConnectiveModelState *s = new ConnectiveModelState(segs.size());
 	for(uint i = 0; i < segs.size(); i++) {
 		BOOST_FOREACH(const AnchoredPhrasePair &pair, segs[i]) {
-			//*sbegin = s->matchConnectiveDictionary(pair);
 			s->matchConnectiveDictionary(pair);
 		}
 	}
@@ -345,7 +342,6 @@ FeatureFunction::StateModifications *ConnectiveModel::estimateScoreUpdate(const 
 	const std::vector<SearchStep::Modification> &mods = step.getModifications();
 	for(std::vector<SearchStep::Modification>::const_iterator it = mods.begin(); it != mods.end(); ++it) {
 		BOOST_FOREACH(const AnchoredPhrasePair &pair, it->proposal) {
-				//*sbegin = s->matchConnectiveDictionary(pair);
 			    s->matchConnectiveDictionary(pair);
 		}
 	}
